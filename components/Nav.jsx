@@ -4,21 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import PhoneNumberModal from "./PhoneNumberModal";
-// import {
-//   NovuProvider,
-//   PopoverNotificationCenter,
-//   NotificationBell,
-//   IMessage,
-// } from "@novu/notification-center";
 
 const Nav = () => {
-  const router = useRouter();
   const { data: session } = useSession();
-  const [open, setOpen] = useState(false);
   const [toggleDropdown, setToggelDropdown] = useState(false);
-
+  const [providers, setProviders] = useState(null);
+  useEffect(() => {
+    (async function () {
+      const response = await getProviders();
+      setProviders(response);
+    })();
+  }, []);
   return (
     <>
       <nav className="flex-between w-full mb-16 pt-3">
@@ -49,13 +45,17 @@ const Nav = () => {
             </div>
           ) : (
             <>
-              <button
-                className="black_btn"
-                type="button"
-                onClick={() => router.push("/register")}
-              >
-                Sign In
-              </button>
+              {providers &&
+                Object.values(providers).map((provider) => (
+                  <button
+                    className="black_btn"
+                    type="button"
+                    key={provider.name}
+                    onClick={() => signIn(provider.id)}
+                  >
+                    {provider.name}Sign In
+                  </button>
+                ))}
             </>
           )}
         </div>
@@ -97,13 +97,17 @@ const Nav = () => {
             </div>
           ) : (
             <>
-              <button
-                type="button"
-                className="black_btn"
-                onClick={() => router.push("/register")}
-              >
-                Sign In
-              </button>
+              {providers &&
+                Object.values(providers).map((provider) => (
+                  <button
+                    className="black_btn"
+                    type="button"
+                    key={provider.name}
+                    onClick={() => signIn(provider.id)}
+                  >
+                    {provider.name} Sign In
+                  </button>
+                ))}
             </>
           )}
         </div>
