@@ -16,7 +16,7 @@ The ultimate service for managing multi-channel notifications with a single API.
 
 <h3>App Link</h3>
 Test the application through this link
-<a>https://remind-x.vercel.app/</a>
+<a href ="https://remind-x.vercel.app/" target="_blank">RemindX</a>
 
 <h3>Screenshoot</h3>
 <img width="1128" alt="image" src="https://res.cloudinary.com/dnrqrebbt/image/upload/v1685244055/home_z4atuj.png">
