@@ -14,6 +14,7 @@
     "@mui/material": "^5.13.2",
     "@novu/node": "^0.15.0",
     "@novu/notification-center": "^0.15.0",
+    "@novu/twilio": "^0.15.0",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
