@@ -23,7 +23,6 @@ const handler = NextAuth({
       }
     },
     async signIn({ profile }) {
-      console.log(profile);
       try {
         // this is a setverless function
         await connectDb;
