@@ -20,6 +20,7 @@ const handler = NextAuth({
         return session;
       } catch (error) {
         console.log(error);
+        return;
       }
     },
     async signIn({ profile }) {
