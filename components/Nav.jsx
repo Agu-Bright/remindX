@@ -53,7 +53,7 @@ const Nav = () => {
                     key={provider.name}
                     onClick={() => signIn(provider.id)}
                   >
-                    {provider.name}Sign In
+                    {provider.name} Sign In
                   </button>
                 ))}
             </>
