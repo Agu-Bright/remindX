@@ -36,17 +36,30 @@ The reason i decided to participate in this hackathon is to improve my skill in 
 </p>
 <p>
 <h3> Environment Variables </h3>
-MONGO_URI
-GOOGLE_ID
-GOOGLE_CLIENT_SECRET
-NEXTAUTH_URL
-NEXTAUTH_URL_INTERNAL
-NEXTAUTH_SECRET
-ACCOUNTSID
-AUTH_TOKEN
-TWILIO_FROM_NUMBER
-NOVU_API_KEY
-APP_ID
+<ul>
+    <li>MONGO_URI</li>
+    <li>GOOGLE_ID</li>
+    <li>GOOGLE_CLIENT_SECRET</li>
+    <li>NEXTAUTH_URL</li>
+    <li>NEXTAUTH_URL_INTERNAL</li>
+    <li>NEXTAUTH_SECRET</li>
+    <li>ACCOUNTSID</li>
+    <li>AUTH_TOKEN</li>
+    <li>TWILIO_FROM_NUMBER</li>
+    <li>NOVU_API_KEY</li>
+    <li>APP_ID</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
 </p>
 
 
