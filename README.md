@@ -34,5 +34,19 @@ I am full stack JavaScript developer currently studying Electrical and Electroni
 <p>
 The reason i decided to participate in this hackathon is to improve my skill in javascript programing
 </p>
+<p>
+<h3> Environment Variables </h3>
+MONGO_URI
+GOOGLE_ID
+GOOGLE_CLIENT_SECRET
+NEXTAUTH_URL
+NEXTAUTH_URL_INTERNAL
+NEXTAUTH_SECRET
+ACCOUNTSID
+AUTH_TOKEN
+TWILIO_FROM_NUMBER
+NOVU_API_KEY
+APP_ID
+</p>
 
 
