@@ -15,8 +15,8 @@ const CreateEvent = () => {
     date: "",
     time: "",
     description: "",
-    reminders: [],
   });
+  const [reminder, setReminder] = useState([]);
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const createEvent = async (e) => {
@@ -76,6 +76,8 @@ const CreateEvent = () => {
         setPost={setPost}
         submitting={submitting}
         handleSubmit={createEvent}
+        reminder={reminder}
+        setReminder={setReminder}
       />
       <PhoneNumberModal open={open} close={handleClose} />
     </>

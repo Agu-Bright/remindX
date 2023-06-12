@@ -1,29 +1,38 @@
 import Link from "next/link";
 
-const Form = ({ update, type, post, setPost, submitting, handleSubmit }) => {
+const Form = ({
+  update,
+  type,
+  post,
+  setPost,
+  submitting,
+  handleSubmit,
+  reminder,
+  setReminder,
+}) => {
   const handleChange = (e) => {
     e.preventDefault();
     setPost((prev) => {
       const name = e.target.name;
       const value = e.target.value;
-      if (e.target.name === "checkbox") {
-        return {
-          ...prev,
-          [name]: value,
-          reminders: [
-            {
-              timeBefore: e.target.value,
-              isSent: false,
-            },
-          ],
-        };
-      }
 
       return {
         ...prev,
         [name]: value,
       };
     });
+  };
+
+  const handleChange2 = (e) => {
+    e.preventDefault(
+      setReminder((prev) => {
+        const value = e.target.value;
+        prev.push({
+          timeBefore: value,
+          isSent: false,
+        });
+      })
+    );
   };
 
   function getDateString(fullDateTimeString) {

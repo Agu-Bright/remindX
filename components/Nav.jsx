@@ -4,6 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  NotificationBell,
+  IMessage,
+} from "@novu/notification-center";
 
 const Nav = () => {
   const { data: session } = useSession();
@@ -15,103 +21,123 @@ const Nav = () => {
       setProviders(response);
     })();
   }, []);
+
+  function onNotificationClick(message) {
+    // your logic to handle the notification click
+    if (message?.cta?.data?.url) {
+      window.location.href = message.cta.data.url;
+    }
+  }
   return (
     <>
-      <nav className="flex-between w-full mb-16 pt-3">
-        <Link href="/" className="flex gap-2 flex-center">
-          <p className="logo_text">RemindX</p>
-        </Link>
+      <NovuProvider
+        subscriberId={session?.user?.id}
+        applicationIdentifier={process.env.APP_ID}
+      >
+        <nav className="flex-between w-full mb-16 pt-3">
+          <Link href="/" className="flex gap-2 flex-center">
+            <p className="logo_text">RemindX</p>
+          </Link>
 
-        {/* Desktop Navigation */}
+          {/* Desktop Navigation */}
 
-        <div className="sm:flex hidden">
-          {session?.user ? (
-            <div className="flex gap-3 md:gap-5">
-              <Link href="/create-event" className="black_btn">
-                Create Event
-              </Link>
-              <button className="outline_btn" type="button" onClick={signOut}>
-                signOut
-              </button>
-              <Link href="/profile">
+          <div className="sm:flex hidden">
+            {session?.user ? (
+              <div className="flex gap-3 md:gap-5">
+                <Link href="/create-event" className="black_btn">
+                  Create Event
+                </Link>
+                <button className="outline_btn" type="button" onClick={signOut}>
+                  signOut
+                </button>
+                <Link href="/profile">
+                  <Image
+                    src={session?.user.image}
+                    alt="Profile"
+                    height={37}
+                    width={37}
+                    className="rounded-full"
+                  />
+                </Link>
+                <PopoverNotificationCenter
+                  styles={{ border: "1px solid black" }}
+                  onNotificationClick={onNotificationClick}
+                >
+                  {({ unseenCount }) => (
+                    <NotificationBell unseenCount={unseenCount} />
+                  )}
+                </PopoverNotificationCenter>
+              </div>
+            ) : (
+              <>
+                {providers &&
+                  Object.values(providers).map((provider) => (
+                    <button
+                      className="black_btn"
+                      type="button"
+                      key={provider.name}
+                      onClick={() => signIn(provider.id)}
+                    >
+                      {provider.name} Sign In
+                    </button>
+                  ))}
+              </>
+            )}
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="sm:hidden flex relative">
+            {session?.user ? (
+              <div className="flex gap-3 md:gap-5">
                 <Image
                   src={session?.user.image}
-                  alt="Profile"
                   height={37}
                   width={37}
                   className="rounded-full"
+                  alt="profile"
+                  onClick={() => setToggelDropdown((prev) => !prev)}
                 />
-              </Link>
-            </div>
-          ) : (
-            <>
-              {providers &&
-                Object.values(providers).map((provider) => (
-                  <button
-                    className="black_btn"
-                    type="button"
-                    key={provider.name}
-                    onClick={() => signIn(provider.id)}
-                  >
-                    {provider.name} Sign In
-                  </button>
-                ))}
-            </>
-          )}
-        </div>
 
-        {/* Mobile Navigation */}
-        <div className="sm:hidden flex relative">
-          {session?.user ? (
-            <div className="flex gap-3 md:gap-5">
-              <Image
-                src={session?.user.image}
-                height={37}
-                width={37}
-                className="rounded-full"
-                alt="profile"
-                onClick={() => setToggelDropdown((prev) => !prev)}
-              />
-
-              {toggleDropdown && (
-                <div className="dropdown">
-                  <Link
-                    href="/create-event"
-                    className="dropdown_link"
-                    onClick={() => setToggelDropdown(false)}
-                  >
-                    Create Event
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setToggelDropdown(false);
-                      signOut();
-                    }}
-                    className="mt-5 w-full black_btn"
-                  >
-                    sign Out
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <>
-              {providers &&
-                Object.values(providers).map((provider) => (
-                  <button
-                    className="black_btn"
-                    type="button"
-                    key={provider.name}
-                    onClick={() => signIn(provider.id)}
-                  >
-                    {provider.name} Sign In
-                  </button>
-                ))}
-            </>
-          )}
-        </div>
-      </nav>
+                {toggleDropdown && (
+                  <div className="dropdown">
+                    <Link
+                      href="/create-event"
+                      className="dropdown_link"
+                      onClick={() => setToggelDropdown(false)}
+                    >
+                      Create Event
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setToggelDropdown(false);
+                        signOut();
+                      }}
+                      className="mt-5 w-full black_btn"
+                    >
+                      sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                {providers &&
+                  Object.values(providers).map((provider) => (
+                    <button
+                      className="black_btn"
+                      type="button"
+                      key={provider.name}
+                      onClick={() => signIn(provider.id)}
+                    >
+                      {provider.name} Sign In
+                    </button>
+                  ))}
+              </>
+            )}
+          </div>
+        </nav>
+      </NovuProvider>
     </>
   );
 };
